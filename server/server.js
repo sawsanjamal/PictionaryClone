@@ -30,6 +30,14 @@ io.on("connection", (socket) => {
         room.guesser.socket.to(room.id).emit("start-guesser");
       }
     });
+    socket.on("make-guess", (data) => {
+      socket.to(room.id).emit("guess", user.name, data.guess);
+    });
+
+    socket.on("draw", (data) => {
+      socket.to(room.id).emit("draw-line", data.start, data.end);
+    });
+
     socket.on("disconnect", () => {
       room.users = room.users.filter((u) => u !== user);
     });
