@@ -1,5 +1,9 @@
 export default function DrawableCanvas(canvas, socket) {
   this.canDraw = false;
+  this.clearCanvas = function () {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
   let previousPosition = null;
   canvas.addEventListener("mousemove", (e) => {
     console.log("hi");

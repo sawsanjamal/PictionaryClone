@@ -23,6 +23,7 @@ socket.emit("join-room", { name: name, roomId: roomId });
 socket.on("start-drawer", startRoundDrawer);
 socket.on("start-guesser", startRoundGuesser);
 socket.on("guess", displayGuess);
+socket.on("winner", endRound);
 endRound();
 resizeCanvas();
 setupHTMLEvents();
@@ -54,11 +55,17 @@ function displayGuess(guesserName, guess) {
 }
 function startRoundDrawer(word) {
   drawableCanvas.canDraw = true;
+  drawableCanvas.clearCanvas();
   wordElement.innerText = word;
+  messagesElement.innerHTML = " ";
 }
 
 function startRoundGuesser() {
   show(guessForm);
+  hide(wordElement);
+  wordElement.innerText = " ";
+  messagesElement.innerHTML = " ";
+  drawableCanvas.clearCanvas();
 }
 
 function resizeCanvas() {
@@ -69,8 +76,14 @@ function resizeCanvas() {
   canvas.height = clientDimensions.height;
 }
 
-function endRound() {
+function endRound(name, word) {
+  if (word && name) {
+    wordElement.innerText = word;
+    show(wordElement);
+    displayGuess(null, `${name} is the winner`);
+  }
   drawableCanvas.canDraw = false;
+  show(readyButton);
   hide(guessForm);
 }
 

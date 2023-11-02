@@ -32,6 +32,12 @@ io.on("connection", (socket) => {
     });
     socket.on("make-guess", (data) => {
       socket.to(room.id).emit("guess", user.name, data.guess);
+      if (data.guess.toLowerCase().trim() === room.word.toLowerCase()) {
+        io.to(room.id).emit("winner", user.name, room.word);
+        room.users.forEach((u) => {
+          u.ready = false;
+        });
+      }
     });
 
     socket.on("draw", (data) => {
