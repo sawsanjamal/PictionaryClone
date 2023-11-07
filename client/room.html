@@ -10,6 +10,33 @@
   </head>
   <body>
     <canvas class="game-board" data-canvas></canvas>
+
+    <div id="color-container">
+      <div class="colors" id="red"></div>
+      <div class="colors" id="blue"></div>
+      <div class="colors" id="yellow"></div>
+      <div class="colors" id="green"></div>
+      <div class="colors" id="orange"></div>
+      <div class="colors" id="purple"></div>
+      <div class="colors" id="black"></div>
+    </div>
+    <div id="line-weight-container">
+      <div class="line-container" data-weight="1">
+        <div class="line one"></div>
+      </div>
+      <div class="line-container" data-weight="2">
+        <div class="line two"></div>
+      </div>
+      <div class="line-container" data-weight="3">
+        <div class="line three"></div>
+      </div>
+      <div class="line-container" data-weight="5">
+        <div class="line five"></div>
+      </div>
+      <div class="line-container" data-weight="6">
+        <div class="line six"></div>
+      </div>
+    </div>
     <section class="text-section">
       <h3 class="word" data-word></h3>
       <div class="messages" data-messages></div>
@@ -20,6 +47,7 @@
           class="guess-input"
           placeholder="Your Guess..."
         />
+
         <button type="submit" class="guess-btn">Guess</button>
       </form>
       <button type="button" data-ready-button class="ready-btn">Ready</button>

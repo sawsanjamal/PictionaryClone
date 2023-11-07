@@ -18,6 +18,11 @@ const readyButton = document.querySelector("[data-ready-button]");
 const canvas = document.querySelector("[data-canvas]");
 const drawableCanvas = new DrawableCanvas(canvas, socket);
 const guessTemplate = document.querySelector("[data-guess-template]");
+const colorElements = document.getElementsByClassName("colors");
+const colorContainer = document.getElementById("color-container");
+const lineWeightElements = document.getElementsByClassName("line-container");
+const lineWeightContainer = document.getElementById("line-weight-container");
+console.log(lineWeightContainer);
 
 socket.emit("join-room", { name: name, roomId: roomId });
 socket.on("start-drawer", startRoundDrawer);
@@ -29,8 +34,11 @@ resizeCanvas();
 setupHTMLEvents();
 
 function setupHTMLEvents() {
+  hide(lineWeightContainer);
+  hide(colorContainer);
   readyButton.addEventListener("click", () => {
     hide(readyButton);
+
     socket.emit("ready");
   });
   guessForm.addEventListener("submit", (e) => {
@@ -44,6 +52,17 @@ function setupHTMLEvents() {
   });
 
   window.addEventListener("resize", resizeCanvas);
+
+  Array.from(colorElements).forEach((colorElement) => {
+    colorElement.addEventListener("click", (e) => {
+      canvas.dataset.color = colorElement.id;
+    });
+  });
+  Array.from(lineWeightElements).forEach((lineWeightElement) => {
+    lineWeightElement.addEventListener("click", (e) => {
+      canvas.dataset.weight = lineWeightElement.dataset.weight;
+    });
+  });
 }
 function displayGuess(guesserName, guess) {
   const guessElement = guessTemplate.content.cloneNode(true);
@@ -54,6 +73,8 @@ function displayGuess(guesserName, guess) {
   messagesElement.append(guessElement);
 }
 function startRoundDrawer(word) {
+  show(lineWeightContainer);
+  show(colorContainer);
   drawableCanvas.canDraw = true;
   drawableCanvas.clearCanvas();
   wordElement.innerText = word;

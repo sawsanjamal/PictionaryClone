@@ -6,7 +6,6 @@ export default function DrawableCanvas(canvas, socket) {
   };
   let previousPosition = null;
   canvas.addEventListener("mousemove", (e) => {
-    console.log("hi");
     if (e.buttons !== 1 || !this.canDraw) {
       previousPosition = null;
       return;
@@ -30,6 +29,8 @@ export default function DrawableCanvas(canvas, socket) {
 
   function drawLine(start, end) {
     const ctx = canvas.getContext("2d");
+    ctx.lineWidth = canvas.dataset.weight;
+    ctx.strokeStyle = canvas.dataset.color;
     ctx.beginPath();
     ctx.moveTo(start.x, start.y);
     ctx.lineTo(end.x, end.y);
